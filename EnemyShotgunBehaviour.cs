@@ -16,7 +16,7 @@ public class EnemyShotgunBehaviour : MonoBehaviour {
 	
 	private float nextFire;
 
-	public float range;
+	private bool inRange;
 	
 	// Use this for initialization
 	void Start () {
@@ -30,17 +30,13 @@ public class EnemyShotgunBehaviour : MonoBehaviour {
 			transform.Translate (Vector3.forward * moveEnemySpeed);
 		}
 
-		Collider[] cols = Physics.OverlapSphere (transform.position, range);
-		foreach (Collider col in cols)
+		if(inRange)
 		{
-			if (col && col.tag == "Player")
-			{
-				if (Time.time > nextFire) {//shot spawnen
-					nextFire = Time.time + (fireRate * randomFireRate);
-					Instantiate(shot, shotSpawn1.position, shotSpawn1.rotation);
-					Instantiate(shot, shotSpawn2.position, shotSpawn2.rotation);
-					Instantiate(shot, shotSpawn3.position, shotSpawn3.rotation);
-				}
+			if (Time.time > nextFire) {//shot spawnen
+				nextFire = Time.time + (fireRate * randomFireRate);
+				Instantiate(shot, shotSpawn1.position, shotSpawn1.rotation);
+				Instantiate(shot, shotSpawn2.position, shotSpawn2.rotation);
+				Instantiate(shot, shotSpawn3.position, shotSpawn3.rotation);
 			}
 		}
 	}
@@ -57,6 +53,11 @@ public class EnemyShotgunBehaviour : MonoBehaviour {
 		if (other.gameObject.name == "Rotate270")
 		{
 			transform.Rotate(new Vector3(0,270,0));
+		}
+
+		if (other.gameObject.name == "InRange")
+		{
+			inRange = true;
 		}
 	}
 }

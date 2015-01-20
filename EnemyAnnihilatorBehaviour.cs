@@ -24,8 +24,7 @@ public class EnemyAnnihilatorBehaviour : MonoBehaviour {
 	private float nextFire3;
 
 	private bool isBoss;
-
-	public float range;
+	private bool inRange;
 	
 	// Use this for initialization
 	void Start () {
@@ -50,27 +49,19 @@ public class EnemyAnnihilatorBehaviour : MonoBehaviour {
 		{
 			transform.Translate (Vector3.forward * moveEnemySpeed);
 		}
-		if(isBoss == false){
-			Collider[] cols = Physics.OverlapSphere (transform.position, range);
-			foreach (Collider col in cols)
-			{
-				if (col && col.tag == "Player")
-				{
-					if (Time.time > nextFire1) {//shot spawnen
-						nextFire1 = Time.time + (fireRate * randomFireRate);
-						Instantiate (shot1, shotSpawn1.position, shotSpawn1.rotation);
-						Instantiate (shot2, shotSpawn4.position, shotSpawn3.rotation);
-						nextFire2 = Time.time + (fireRate / 2);
-						//nextFire3 = Time.time + (fireRate / 2f);
-						//thirdShot = true;
-						secondShot = true;
-					}
-					if (Time.time > nextFire2 && secondShot == true) {//shot spawnen
-						Instantiate (shot1, shotSpawn2.position, shotSpawn2.rotation);
-						Instantiate (shot2, shotSpawn3.position, shotSpawn4.rotation);
-						secondShot = false;
-					}
-				}
+
+		if(inRange == true){
+			if (Time.time > nextFire1) {//shot spawnen
+				nextFire1 = Time.time + (fireRate * randomFireRate);
+				Instantiate (shot1, shotSpawn1.position, shotSpawn1.rotation);
+				Instantiate (shot2, shotSpawn4.position, shotSpawn3.rotation);
+				nextFire2 = Time.time + (fireRate / 2);
+				secondShot = true;
+			}
+			if (Time.time > nextFire2 && secondShot == true) {//shot spawnen
+				Instantiate(shot1, shotSpawn2.position, shotSpawn2.rotation);
+				Instantiate (shot2, shotSpawn3.position, shotSpawn4.rotation);
+				secondShot = false;
 			}
 		}
 		if(isBoss){
@@ -103,6 +94,14 @@ public class EnemyAnnihilatorBehaviour : MonoBehaviour {
 		if (other.gameObject.name == "Rotate270")
 		{
 			transform.Rotate(new Vector3(0,270,0));
+		}
+
+		if(isBoss == false)
+		{
+			if (other.gameObject.name == "InRange")
+			{
+				inRange = true;
+			}
 		}
 	}
 }

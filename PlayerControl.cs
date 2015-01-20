@@ -22,8 +22,6 @@ public class PlayerControl : MonoBehaviour {
 
 	public static float fireMode = 2;
 
-	public static bool gameFinished = false;
-
 	private float myVelocity;
 
 	/*
@@ -41,7 +39,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 		if(gameObject.name == "Player Race Tank")
 		{
-			myVelocity = 125;
+			myVelocity = 80;
 		}
 	}
 	
@@ -52,14 +50,15 @@ public class PlayerControl : MonoBehaviour {
 		if(UI.enemies <= 0) 
 		{
 			int i = Application.loadedLevel;
-			if(i > 11){
-				gameFinished = true;
+			if(i == 11){
+				Menu.gameFinished = true;
 				Application.LoadLevel("Menu");
 			}
 			else{
 				Application.LoadLevel(i + 1);
 			}
 		}
+
 		//Velocity:
 		transform.Translate (Vector3.forward * (moveSpeed * Time.deltaTime));
 		transform.Rotate (Vector3.up * (rotateSpeed * Time.deltaTime));

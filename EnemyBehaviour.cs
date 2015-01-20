@@ -18,18 +18,12 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	private bool isTurret = false;
 
-	public float range;
+	private bool inRange;
 
 	//private float range = 25;
 
 	// Use this for initialization
 	void Start () {
-		/*
-		if (moveOrNot = 1)
-		{
-			range += 30;
-		}
-		*/
 		if(gameObject.name == "Rotating Turret")
 		{
 			fireRate = 0.5f;
@@ -60,20 +54,11 @@ public class EnemyBehaviour : MonoBehaviour {
 			transform.Rotate(new Vector3(0,3,0));
 		}
 
-
-		if(isTurret == false)
+		if(inRange == true)
 		{
-			//see if in range:
-			Collider[] cols = Physics.OverlapSphere (transform.position, range);
-			foreach (Collider col in cols)
-			{
-				if (col && col.tag == "Player")
-				{
-					if (Time.time > nextFire) {//shot spawnen
-						nextFire = Time.time + (fireRate * randomFireRate);
-						Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-					}
-				}
+			if (Time.time > nextFire) {//shot spawnen
+				nextFire = Time.time + (fireRate * randomFireRate);
+				Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 			}
 		}
 		if(isTurret == true)
@@ -115,6 +100,13 @@ public class EnemyBehaviour : MonoBehaviour {
 				}
 			}
 
+		}
+		if(isTurret == false)
+		{
+			if (other.gameObject.name == "InRange")
+			{
+				inRange = true;
+			}	
 		}
 	}
 }

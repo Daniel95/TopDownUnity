@@ -12,6 +12,8 @@ public class Menu : MonoBehaviour {
 	private float buttonWidth;
 
 	public static int difficulty;
+
+	public static bool gameFinished = false;
 	
 
 	// Use this for initialization
@@ -25,11 +27,7 @@ public class Menu : MonoBehaviour {
 		menuFunction = mainMenu;
 
 		//eindscherm laten zien als uitgespeeld
-		if(PlayerBigControl.gameFinished == true)
-		{
-			menuFunction = afterScreen;
-		}
-		if(PlayerControl.gameFinished == true)
+		if(gameFinished == true)
 		{
 			menuFunction = afterScreen;
 		}
@@ -37,6 +35,7 @@ public class Menu : MonoBehaviour {
 
 	void Update()
 	{
+
 	}
 
 	void OnGUI()
@@ -47,6 +46,7 @@ public class Menu : MonoBehaviour {
 	void mainMenu()
 	{
 		GUI.Box (new Rect (Screen.width/15-80/2, 120/2, 250, 200), "Welcome To Annihilator\r\n\r\nControls:\r\nMove: W,A,S,D\r\nShoot: Left Mouse Button\r\nChange Firerate: Right Mouse Button\r\n(The damage chances too!)\r\n\r\n\r\nPickups:\r\nMedicine: plus 2 Health\r\nBullet: double Firerate speed");
+		GUI.Box (new Rect (Screen.width/15-80/2, 550, 150, 25), "Made By: Daniël Brand");
 		if (GUI.Button (new Rect ((screenWidth - buttonWidth) * 0.5f, screenHeight * 0.1f, buttonWidth, buttonHeight), "Start Annihilators"))
 		{
 			menuFunction = selectLevel1;
@@ -189,10 +189,10 @@ public class Menu : MonoBehaviour {
 	}
 	void afterScreen()
 	{
-		GUI.Box (new Rect (Screen.width/4.25f, 120/2, 600, 200), "\r\nGefeliciteerd!\r\n\r\nU heeft 70 Rode Tanks Vernietigt, \r\ndie op een of anderen mysterieuzen reden op de maan zaten.\r\n\r\nJe hebt met geen enkelen Rode Tank contact proberen te zoeken,\r\n het grote mysterie van deze tanks zal nu voor altijd verborgen blijven.\r\n\r\nMet geen weg om van deze planeet af te komen is er geen anderen keuzen behalven door rijden...\r\n Misschien kom je ooit nog meer Rode tanks tegen die je kan vernietigen.");
+		GUI.Box (new Rect (Screen.width/4.25f, 120/2, 600, 200), "\r\nGefeliciteerd!\r\n\r\nU heeft 70 Rode Tanks Vernietigd, \r\ndie op een of andere mysterieuze reden op de maan zaten.\r\n\r\nJe hebt met geen enkele Rode Tank contact proberen te zoeken,\r\n het grote mysterie van deze tanks zal nu voor altijd verborgen blijven.\r\n\r\nMet geen weg om van deze planeet af te komen is er geen andere keuze behalve door rijden...\r\n Misschien kom je ooit nog meer Rode tanks tegen die je kan vernietigen...");
 		if (GUI.Button (new Rect ((screenWidth - buttonWidth) * 0.5f, screenHeight * 0.66f, buttonWidth, buttonHeight), "Menu"))
 		{
-			PlayerControl.gameFinished = false;
+			gameFinished = false;
 			menuFunction = mainMenu;
 		}
 	}

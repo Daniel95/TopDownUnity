@@ -42,6 +42,7 @@ public class UI : MonoBehaviour {
 	{
 		if (GUI.Button (new Rect (Screen.width/1.05f-sizeX/1.5f, offsetY/2, sizeX, sizeY), "Menu")) 
 		{
+			Die.bossHealth = 0;
 			Application.LoadLevel("Menu");
 		}
 	}

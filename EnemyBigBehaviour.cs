@@ -22,7 +22,7 @@ public class EnemyBigBehaviour : MonoBehaviour {
 
 	private bool isBoss;
 
-	public float range;
+	private bool inRange;
 	
 	// Use this for initialization
 	void Start () {
@@ -36,46 +36,41 @@ public class EnemyBigBehaviour : MonoBehaviour {
 			fireRate = 5f;
 			isBoss = false;
 		}
+		if (gameObject.name == "Enemy Big")
+		{
+			fireRate = 2f;
+			isBoss = false;
+		}
 		randomFireRate = Random.Range(0f, 0.5f) + 0.75f;
 	}
 
 	// Updatie is called once per frame
-	void Update () {
+	void Update () 
+	{
 		if (moveOrNot == 1) 
 		{
 			transform.Translate (Vector3.forward * moveEnemySpeed);
 		}
-		if(isBoss == false)
+		if(inRange)
 		{
-			Collider[] cols = Physics.OverlapSphere (transform.position, range);
-			foreach (Collider col in cols)
-			{
-				if (col && col.tag == "Player")
-				{
-					if (Time.time > nextFire1) {//shot spawnen
-						nextFire1 = Time.time + (fireRate * randomFireRate);
-						Instantiate (shot, shotSpawn1.position, shotSpawn1.rotation);
-						nextFire2 = Time.time + (fireRate / 4);
-						nextFire3 = Time.time + (fireRate / 2f);
-						thirdShot = true;
-						secondShot = true;
-					}
-					if (Time.time > nextFire2 && secondShot == true) {//shot spawnen
-						Instantiate (shot, shotSpawn2.position, shotSpawn2.rotation);
-						secondShot = false;
-					}
-					if (gameObject.name == "Boss Big Enemy" && Time.time > nextFire3 && thirdShot == true)
-					{
-						Instantiate (shot, shotSpawn2.position, shotSpawn2.rotation);
-						Instantiate (shot, shotSpawn1.position, shotSpawn1.rotation);
-						thirdShot = false;
-					}
-				}
+			if (Time.time > nextFire1) 
+			{//shot spawnen
+				nextFire1 = Time.time + (fireRate * randomFireRate);
+				Instantiate (shot, shotSpawn1.position, shotSpawn1.rotation);
+				nextFire2 = Time.time + (fireRate / 4);
+				nextFire3 = Time.time + (fireRate / 2f);
+				thirdShot = true;
+				secondShot = true;
+			}
+			if (Time.time > nextFire2 && secondShot == true) {//shot spawnen
+				Instantiate (shot, shotSpawn2.position, shotSpawn2.rotation);
+				secondShot = false;
 			}
 		}
 		if(isBoss)
 		{
-			if (Time.time > nextFire1) {//shot spawnen
+			if (Time.time > nextFire1) //shot spawnen
+			{
 				nextFire1 = Time.time + (fireRate * randomFireRate);
 				Instantiate (shot, shotSpawn1.position, shotSpawn1.rotation);
 				nextFire2 = Time.time + (fireRate / 4);
@@ -108,6 +103,14 @@ public class EnemyBigBehaviour : MonoBehaviour {
 		if (other.gameObject.name == "Rotate270")
 		{
 				transform.Rotate(new Vector3(0,270,0));
+		}
+
+		if(isBoss == false)
+		{
+			if (other.gameObject.name == "InRange")
+			{
+				inRange = true;
+			}
 		}
 	}
 }

@@ -17,8 +17,8 @@ public class TankBallMove : MonoBehaviour {
 	void Update () 
 	{
 		//Velocity:
-		transform.Translate (Vector3.forward * moveSpeed);
-		transform.Rotate (Vector3.up * rotateSpeed);
+		transform.Translate (Vector3.forward * (moveSpeed * Time.deltaTime));
+		transform.Rotate (Vector3.up * (rotateSpeed * Time.deltaTime));
 		
 		moveSpeed -= moveSpeed/10;
 		rotateSpeed -= rotateSpeed/10;

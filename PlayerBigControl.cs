@@ -8,7 +8,6 @@ public class PlayerBigControl : MonoBehaviour {
 	public float plusRotateSpeed;
 	
 
-	public static bool gameFinished = false;
 	//public float TankX = 0;
 	//public float TankY = 0;
 
@@ -31,7 +30,6 @@ public class PlayerBigControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		
 	}
 
 	// Update is called once per frame
@@ -41,7 +39,7 @@ public class PlayerBigControl : MonoBehaviour {
 		{
 			int i = Application.loadedLevel;
 			if(i >= 11){
-				gameFinished = true;
+				Menu.gameFinished = true;
 				Application.LoadLevel("Menu");
 			}
 			else{
@@ -84,6 +82,7 @@ public class PlayerBigControl : MonoBehaviour {
 			duration -= Time.deltaTime;
 			if(duration <= 0)
 			{
+				fireRateBonus = 0;
 				countDown = false;
 			}
 		}
